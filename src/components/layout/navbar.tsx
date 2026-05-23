@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Menu, ChevronDown } from "lucide-react";
+import { Menu, ChevronDown, DoorOpen, ArrowUpRight } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -112,7 +112,26 @@ export function Navbar() {
           </NavLink>
         </nav>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Client portal login — ghost button with door icon */}
+          <a
+            href={COMPANY.portalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Client portal login (opens in a new tab)"
+            className="group/login hidden md:inline-flex items-center gap-2 h-10 px-4 border border-[var(--color-rule)] bg-transparent hover:bg-[var(--color-oxblood-tint)] hover:border-[var(--color-oxblood)] text-[var(--color-ink-secondary)] hover:text-[var(--color-oxblood)] transition-colors font-sans text-[12px] uppercase tracking-[0.12em] relative"
+          >
+            <DoorOpen
+              className="size-[15px] transition-all duration-300 ease-out group-hover/login:rotate-[-8deg] group-hover/login:translate-x-[1px]"
+              aria-hidden
+            />
+            <span>Client&nbsp;Login</span>
+            <ArrowUpRight
+              className="size-3 opacity-0 -translate-x-1 group-hover/login:opacity-70 group-hover/login:translate-x-0 transition-all duration-300"
+              aria-hidden
+            />
+          </a>
+
           <Button
             asChild
             className="hidden sm:inline-flex bg-[var(--color-oxblood)] text-[var(--color-paper)] hover:bg-[var(--color-oxblood-hover)] rounded-none font-sans font-medium tracking-wide h-10 px-5 text-[13px]"
@@ -230,6 +249,20 @@ export function Navbar() {
                 >
                   <a href={`tel:${COMPANY.phoneTel}`}>{COMPANY.phone}</a>
                 </Button>
+                <a
+                  href={COMPANY.portalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Client portal login (opens in a new tab)"
+                  className="mt-2 inline-flex items-center justify-center gap-2 h-11 px-4 border border-[var(--color-rule)] hover:border-[var(--color-oxblood)] hover:bg-[var(--color-oxblood-tint)] text-[var(--color-ink)] hover:text-[var(--color-oxblood)] transition-colors font-sans text-[13px] uppercase tracking-[0.10em] group/mlogin"
+                >
+                  <DoorOpen
+                    className="size-4 transition-transform duration-300 group-hover/mlogin:rotate-[-8deg]"
+                    aria-hidden
+                  />
+                  <span>Client login</span>
+                  <ArrowUpRight className="size-3 opacity-60" aria-hidden />
+                </a>
               </nav>
             </SheetContent>
           </Sheet>
