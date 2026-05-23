@@ -1,26 +1,386 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ---------------------------------------------------------------------------
+ * R & M Accounting — "Houston Ledger" theme
+ *
+ * Light, editorial, document-first. Warm cream paper + ink-black serifs +
+ * oxblood accents. NO dark mode. Hard corners everywhere — the system uses
+ * hairline rules, not rounded cards.
+ * ------------------------------------------------------------------------- */
 
 @theme inline {
+  /* ShadCN-mapped tokens (preserved for component compatibility) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* ───────────── Houston Ledger palette ───────────── */
+  --color-paper:          #F5F1E8;  /* warm cream — primary surface */
+  --color-paper-tint:     #EEE7D8;  /* card surface, alternating bands */
+  --color-paper-deep:     #E5DCC6;  /* header/footer band, deeper warmth */
+
+  --color-ink:            #1A1714;  /* near-black with brown undertone */
+  --color-ink-secondary:  #4A453E;  /* body prose */
+  --color-ink-muted:      #8A8378;  /* metadata, dates, footnotes */
+
+  --color-rule:           #C9C0AE;  /* hairline */
+  --color-rule-soft:      #DDD3BC;  /* secondary hairline */
+
+  --color-oxblood:        #6B1F2A;  /* primary accent — links, CTAs */
+  --color-oxblood-hover:  #4F1721;
+  --color-oxblood-tint:   #F2E4E5;  /* faint wash for hover surfaces */
+
+  --color-gold-leaf:      #A3823A;  /* antique gold — sparing ornament */
+  --color-gold-leaf-soft: #C4A053;
+
+  --color-success:        #3E5C3A;  /* forest */
+  --color-warning:        #8B5E1F;  /* burnt sienna */
+  --color-error:          #7A2929;  /* deep red */
+
+  /* Legacy rm-* aliases — preserved so existing className usage still works.
+     Every utility like `bg-rm-bg`, `text-rm-accent`, `border-rm-border`
+     continues to compile and renders against the new palette. */
+  --color-rm-bg:               var(--color-paper);
+  --color-rm-card:             var(--color-paper-tint);
+  --color-rm-border:           var(--color-rule);
+  --color-rm-accent:           var(--color-oxblood);
+  --color-rm-accent-hover:     var(--color-oxblood-hover);
+  --color-rm-gold:             var(--color-gold-leaf);
+  --color-rm-success:          var(--color-success);
+  --color-rm-warning:          var(--color-warning);
+  --color-rm-error:            var(--color-error);
+  --color-rm-text:             var(--color-ink);
+  --color-rm-text-secondary:   var(--color-ink-secondary);
+  --color-rm-text-muted:       var(--color-ink-muted);
+
+  /* Direct semantic aliases (paper/ink/oxblood/gold/rule) */
+  --color-paper-tint-aliased:  var(--color-paper-tint);
+
+  /* Typography */
+  --font-display:  var(--font-fraunces), ui-serif, Georgia, "Iowan Old Style", serif;
+  --font-sans:     var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading:  var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono:     var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
+
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ───────── Single light theme — no .dark variant ───────── */
+:root {
+  --background:            var(--color-paper);
+  --foreground:            var(--color-ink);
+  --card:                  var(--color-paper-tint);
+  --card-foreground:       var(--color-ink);
+  --popover:               var(--color-paper-tint);
+  --popover-foreground:    var(--color-ink);
+  --primary:               var(--color-oxblood);
+  --primary-foreground:    var(--color-paper);
+  --secondary:             var(--color-paper-deep);
+  --secondary-foreground:  var(--color-ink);
+  --muted:                 var(--color-paper-deep);
+  --muted-foreground:      var(--color-ink-muted);
+  --accent:                var(--color-oxblood-tint);
+  --accent-foreground:     var(--color-oxblood);
+  --destructive:           var(--color-error);
+  --border:                var(--color-rule);
+  --input:                 var(--color-rule);
+  --ring:                  var(--color-oxblood);
+  --chart-1: var(--color-oxblood);
+  --chart-2: var(--color-gold-leaf);
+  --chart-3: var(--color-success);
+  --chart-4: var(--color-warning);
+  --chart-5: var(--color-error);
+  --radius: 0;
+  --sidebar:                       var(--color-paper);
+  --sidebar-foreground:            var(--color-ink);
+  --sidebar-primary:               var(--color-oxblood);
+  --sidebar-primary-foreground:    var(--color-paper);
+  --sidebar-accent:                var(--color-paper-deep);
+  --sidebar-accent-foreground:     var(--color-ink);
+  --sidebar-border:                var(--color-rule);
+  --sidebar-ring:                  var(--color-oxblood);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    font-family: var(--font-sans);
+    color-scheme: light;
+    font-feature-settings: "tnum", "case", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+  }
+
+  /* Keyboard focus — oxblood, no rounded corners */
+  :focus-visible {
+    outline: 2px solid var(--color-oxblood);
+    outline-offset: 3px;
+    border-radius: 0;
+  }
+
+  /* Honor reduced motion site-wide */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ───────── Paper grain overlay ─────────
+ * Fixed, behind interactive content, 3.5% opacity, multiply blend.
+ * The single touch that makes the site feel like a physical document. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+body > * { position: relative; z-index: 2; }
+
+/* ───────── Editorial utility classes ───────── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+}
+
+.roman {
+  font-family: var(--font-display);
+  font-variant-caps: small-caps;
+  font-feature-settings: "smcp", "c2sc";
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--color-gold-leaf);
+}
+
+.rule-hair { border-top: 1px solid var(--color-rule); }
+.rule-ox   { border-top: 1px solid var(--color-oxblood); }
+.rule-ox-2 { border-top: 2px solid var(--color-oxblood); }
+
+.drop-cap::first-letter {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  line-height: 0.88;
+  float: left;
+  padding-right: 0.7rem;
+  padding-top: 0.45rem;
+  padding-bottom: 0.1rem;
+  color: var(--color-oxblood);
+  font-weight: 400;
+}
+
+.pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(22px, 2.6vw, 32px);
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  padding: 32px 0;
+  border-top: 1px solid var(--color-rule);
+  border-bottom: 1px solid var(--color-rule);
+  color: var(--color-ink);
+}
+
+.label-period::after { content: "."; }
+
+/* Body link underline reveal */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+  color: var(--color-oxblood);
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  height: 2px;
+}
+
+/* Navbar link — underline reveals from 0 on hover */
+.nav-link {
+  position: relative;
+  color: var(--color-ink-secondary);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 1px;
+  background: var(--color-oxblood);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 380ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.nav-link:hover,
+.nav-link[data-active="true"] {
+  color: var(--color-ink);
+}
+.nav-link:hover::after,
+.nav-link[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* Editorial prose (used for blog body + service-detail body) */
+.prose-editorial {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--color-ink-secondary);
+}
+.prose-editorial > * + * { margin-top: 1.1em; }
+.prose-editorial h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-top: 2.4em;
+  margin-bottom: 0.4em;
+  letter-spacing: -0.015em;
+}
+.prose-editorial h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--color-ink);
+  margin-top: 1.8em;
+  margin-bottom: 0.25em;
+}
+.prose-editorial a {
+  color: var(--color-oxblood);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-thickness 200ms ease;
+}
+.prose-editorial a:hover { text-decoration-thickness: 2px; }
+.prose-editorial strong { color: var(--color-ink); font-weight: 600; }
+.prose-editorial ul, .prose-editorial ol {
+  padding-left: 1.4em;
+}
+.prose-editorial ul { list-style: none; }
+.prose-editorial ul > li {
+  position: relative;
+}
+.prose-editorial ul > li::before {
+  content: "—";
+  position: absolute;
+  left: -1.4em;
+  color: var(--color-oxblood);
+}
+.prose-editorial ol { list-style: lower-roman; }
+.prose-editorial ol > li::marker { color: var(--color-gold-leaf); font-family: var(--font-display); }
+.prose-editorial blockquote {
+  margin: 2em 0;
+  padding: 1em 0;
+  border-top: 1px solid var(--color-rule);
+  border-bottom: 1px solid var(--color-rule);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 24px;
+  line-height: 1.35;
+  color: var(--color-ink);
+}
+.prose-editorial code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--color-paper-tint);
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--color-rule-soft);
+}
+.prose-editorial hr {
+  border: none;
+  border-top: 1px solid var(--color-rule);
+  margin: 3em 0;
+}
+
+/* Loading rule for src/app/loading.tsx */
+@keyframes ledger-rule-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.ledger-loading-rule {
+  height: 1px;
+  background: var(--color-oxblood);
+  transform-origin: left;
+  animation: ledger-rule-grow 1.2s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+}
+
+/* Subtle reveal for letter-by-letter hero */
+@keyframes ledger-letter-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ledger-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: ledger-letter-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ledger-letter { opacity: 1; animation: none; }
 }
