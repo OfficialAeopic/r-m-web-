@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Public_Sans, IBM_Plex_Mono, Caveat } from "next/font/google";
 import { ConsentedAnalytics } from "@/components/consented-analytics";
+import { FeedbackWidget } from "@/components/feedback-widget";
 import { SiteChrome } from "@/components/layout/site-chrome";
 import { JsonLd } from "@/components/seo/json-ld";
 import { organizationLd } from "@/lib/metadata";
@@ -78,6 +79,7 @@ export default function RootLayout({
         </a>
         <SiteChrome>{children}</SiteChrome>
         <ConsentedAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        <FeedbackWidget />
       </body>
     </html>
   );
