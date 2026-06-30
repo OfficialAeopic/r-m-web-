@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { COMPANY, CIRCULAR_230_DISCLAIMER } from "@/lib/constants";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 
 const EXPLORE_LINKS = [
   { href: "/", label: "Home" },
@@ -25,6 +26,19 @@ export function Footer() {
   return (
     <footer className="mt-32 border-t border-[var(--color-rule)] bg-[var(--color-paper-deep)]">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 py-20">
+        {/* Newsletter */}
+        <div className="mb-14 pb-10 border-b border-[var(--color-rule)] grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-8 items-center">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-gold-leaf)]">
+              The R &amp; M Ledger.
+            </p>
+            <h2 className="mt-3 font-display text-[24px] sm:text-[28px] leading-[1.15] text-[var(--color-ink)]">
+              Tax tips &amp; deadline reminders, a few times a year.
+            </h2>
+          </div>
+          <NewsletterSignup />
+        </div>
+
         {/* Masthead */}
         <div className="text-center mb-14 pb-10 border-b border-[var(--color-rule)]">
           <p className="font-display text-[28px] text-[var(--color-ink)] tracking-[-0.02em]">

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { SectionNumber } from "@/components/typography/section-number";
-import { HoustonSkyline } from "@/components/ornament/houston-skyline";
+import { HoustonSkylineAnimated } from "@/components/ornament/houston-skyline-animated";
 
 const HEADLINE_LINES = [
   "Tax preparation,",
@@ -117,7 +117,7 @@ export function Hero() {
             <div className="w-full max-w-[460px]">
               <div className="border-l border-[var(--color-rule)] pl-6">
                 <p className="eyebrow mb-4">A View From the Office.</p>
-                <HoustonSkyline className="w-full" />
+                <HoustonSkylineAnimated className="w-full" loop speed={1.4} />
                 <p className="mt-4 font-display italic text-[13px] text-[var(--color-ink-muted)]">
                   Houston, looking east from Greenhouse Rd.
                 </p>

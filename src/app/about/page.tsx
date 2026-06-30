@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { buildMetadata } from "@/lib/metadata";
 import { SectionNumber } from "@/components/typography/section-number";
+import { WhyRM } from "@/components/home/why-rm";
 
 export const metadata: Metadata = buildMetadata({
   title: "Our Story",
@@ -250,6 +251,8 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
+      <WhyRM />
+
       <section className="border-t border-b border-[var(--color-rule)]">
         <div className="mx-auto max-w-3xl px-5 lg:px-8 py-20 text-center space-y-6">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]">

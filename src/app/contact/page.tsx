@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { COMPANY } from "@/lib/constants";
-import { ContactForm } from "./contact-form";
+import { LeadForm } from "@/components/lead-form";
 import { buildMetadata } from "@/lib/metadata";
 import { SectionNumber } from "@/components/typography/section-number";
 
@@ -20,7 +20,12 @@ const MAP_LINK =
   "https://www.google.com/maps/search/?api=1&query=" +
   encodeURIComponent(COMPANY.address.full);
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ service?: string; city?: string }>;
+}) {
+  const { service, city } = await searchParams;
   return (
     <>
       {/* Header */}
@@ -55,7 +60,7 @@ export default function ContactPage() {
         {/* Left — Form */}
         <div>
           <p className="eyebrow mb-7">Submit a Message.</p>
-          <ContactForm />
+          <LeadForm defaultService={service} defaultCity={city} heading="" />
         </div>
 
         {/* Right — Address card */}

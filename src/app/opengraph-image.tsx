@@ -16,8 +16,8 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 72,
-          background: "#F5F1E8",
-          color: "#1A1714",
+          background: "#F4F1EA",
+          color: "#16243F",
           fontFamily: "Georgia, serif",
         }}
       >
@@ -27,7 +27,8 @@ export default function OpengraphImage() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            borderBottom: "1px solid #C9C0AE",
+            gap: 6,
+            borderBottom: "1px solid #D8D1C2",
             paddingBottom: 24,
             width: "100%",
           }}
@@ -37,11 +38,22 @@ export default function OpengraphImage() {
               fontSize: 16,
               letterSpacing: 6,
               textTransform: "uppercase",
-              color: "#8A8378",
+              color: "#5A6373",
               fontFamily: "monospace",
             }}
           >
             R &amp; M ACCOUNTING · HOUSTON · EST. 1981
+          </div>
+          <div
+            style={{
+              fontSize: 13,
+              letterSpacing: 5,
+              textTransform: "uppercase",
+              color: "#1E3A8A",
+              fontFamily: "monospace",
+            }}
+          >
+            Clear Crossway Solutions
           </div>
         </div>
 
@@ -59,7 +71,7 @@ export default function OpengraphImage() {
               fontSize: 14,
               letterSpacing: 4,
               textTransform: "uppercase",
-              color: "#A3823A",
+              color: "#2563EB",
               fontFamily: "monospace",
             }}
           >
@@ -70,15 +82,15 @@ export default function OpengraphImage() {
               fontSize: 92,
               lineHeight: 1.02,
               letterSpacing: -2,
-              color: "#1A1714",
+              color: "#16243F",
               display: "flex",
               flexDirection: "column",
             }}
           >
-            <div>Tax preparation,</div>
-            <div>done by hand,</div>
-            <div style={{ fontStyle: "italic", color: "#6B1F2A" }}>
-              since 1981.
+            <div>We keep Houston&apos;s</div>
+            <div>books</div>
+            <div style={{ fontStyle: "italic", color: "#1E3A8A" }}>
+              in order.
             </div>
           </div>
         </div>
@@ -90,20 +102,20 @@ export default function OpengraphImage() {
             justifyContent: "space-between",
             alignItems: "flex-end",
             fontSize: 18,
-            color: "#8A8378",
+            color: "#5A6373",
             fontFamily: "monospace",
             letterSpacing: 2,
             textTransform: "uppercase",
-            borderTop: "1px solid #C9C0AE",
+            borderTop: "1px solid #D8D1C2",
             paddingTop: 24,
             width: "100%",
           }}
         >
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <div style={{ color: "#1A1714" }}>rmtax.org</div>
+            <div style={{ color: "#16243F" }}>rmtax.org</div>
             <div>3880 Greenhouse Rd · Houston, TX</div>
           </div>
-          <div style={{ color: "#1A1714", letterSpacing: 1 }}>
+          <div style={{ color: "#16243F", letterSpacing: 1 }}>
             (281) 391-2900
           </div>
         </div>

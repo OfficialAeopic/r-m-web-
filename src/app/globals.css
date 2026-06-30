@@ -43,24 +43,28 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
 
-  /* ───────────── Houston Ledger palette ───────────── */
-  --color-paper:          #F5F1E8;  /* warm cream — primary surface */
-  --color-paper-tint:     #EEE7D8;  /* card surface, alternating bands */
-  --color-paper-deep:     #E5DCC6;  /* header/footer band, deeper warmth */
+  /* ───────────── Blue & Pearl palette (2026-06-29 — site-wide) ─────────────
+   * Promoted to :root so the whole site shares the home's identity.
+   * Pearl = warm off-white (NEVER stark white — client rejected plain white).
+   * Primary = deep navy / royal blue. Token NAMES are kept (paper/ink/oxblood/
+   * gold-leaf/rule) so every existing className flips with zero per-page edits. */
+  --color-paper:          #F4F1EA;  /* warm pearl — primary surface */
+  --color-paper-tint:     #FBF9F3;  /* soft pearl — cards (not stark white) */
+  --color-paper-deep:     #EAE4D7;  /* deeper pearl — header/footer bands */
 
-  --color-ink:            #1A1714;  /* near-black with brown undertone */
-  --color-ink-secondary:  #4A453E;  /* body prose */
-  --color-ink-muted:      #8A8378;  /* metadata, dates, footnotes */
+  --color-ink:            #16243F;  /* deep navy ink */
+  --color-ink-secondary:  #3A4860;  /* navy-slate body prose */
+  --color-ink-muted:      #5A6373;  /* metadata (AA on pearl) */
 
-  --color-rule:           #C9C0AE;  /* hairline */
-  --color-rule-soft:      #DDD3BC;  /* secondary hairline */
+  --color-rule:           #D8D1C2;  /* warm pearl hairline */
+  --color-rule-soft:      #E6DFCF;  /* secondary hairline */
 
-  --color-oxblood:        #6B1F2A;  /* primary accent — links, CTAs */
-  --color-oxblood-hover:  #4F1721;
-  --color-oxblood-tint:   #F2E4E5;  /* faint wash for hover surfaces */
+  --color-oxblood:        #1E3A8A;  /* PRIMARY accent — deep navy/royal blue */
+  --color-oxblood-hover:  #16306E;
+  --color-oxblood-tint:   #E4EAF6;  /* faint blue wash for hover surfaces */
 
-  --color-gold-leaf:      #A3823A;  /* antique gold — sparing ornament */
-  --color-gold-leaf-soft: #C4A053;
+  --color-gold-leaf:      #2563EB;  /* secondary accent — royal blue (no gold) */
+  --color-gold-leaf-soft: #5B86E0;
 
   --color-success:        #3E5C3A;  /* forest */
   --color-warning:        #8B5E1F;  /* burnt sienna */
@@ -383,4 +387,196 @@ body > * { position: relative; z-index: 2; }
 }
 @media (prefers-reduced-motion: reduce) {
   .ledger-letter { opacity: 1; animation: none; }
+}
+
+/* ===========================================================================
+ * "Meridian" — redesigned homepage theme (Website redesign 2026-06-24).
+ * SCOPED to .theme-rm-pro so the rest of the site keeps the Houston Ledger
+ * theme until Sam approves. Promote these tokens to :root to roll site-wide.
+ * Professional navy + a single confident royal-blue accent; crisp white
+ * content sections; dark cinematic hero.
+ * ======================================================================== */
+.theme-rm-pro {
+  --m-navy:        #0A1626;  /* deepest — hero canvas */
+  --m-navy-2:      #0E2138;  /* hero gradient stop */
+  --m-ink:         #11243B;  /* headings on light */
+  --m-body:        #3B4D63;  /* body text on light */
+  --m-muted:       #6B7C92;  /* metadata */
+  --m-blue:        #2E6BE6;  /* primary accent */
+  --m-blue-hover:  #1F50C0;
+  --m-blue-soft:   #6FA0F2;  /* on-dark accent, italics */
+  --m-paper:       #FFFFFF;
+  --m-mist:        #F4F7FC;  /* alt section bg */
+  --m-mist-2:      #EAF1FB;  /* faint blue wash */
+  --m-line:        #E2E9F3;  /* hairline on light */
+  --m-line-dark:   rgba(255,255,255,0.12); /* hairline on dark */
+  --m-paper-dim:   rgba(255,255,255,0.72);
+  --m-paper-faint: rgba(255,255,255,0.55);
+
+  --font-script: var(--font-caveat), "Segoe Script", cursive;
+
+  color: var(--m-body);
+  font-family: var(--font-sans);
+}
+
+/* Cinematic hero backdrop: navy gradient + radial blue glow + fine grain. */
+.m-hero-bg {
+  background:
+    radial-gradient(1200px 600px at 78% 18%, rgba(46,107,230,0.28), transparent 60%),
+    radial-gradient(900px 500px at 12% 90%, rgba(46,107,230,0.14), transparent 55%),
+    linear-gradient(160deg, var(--m-navy-2) 0%, var(--m-navy) 58%, #060F1C 100%);
+}
+.m-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+/* Hairline grid overlay for the hero — subtle "ledger" nod. */
+.m-grid-lines {
+  background-image:
+    linear-gradient(var(--m-line-dark) 1px, transparent 1px),
+    linear-gradient(90deg, var(--m-line-dark) 1px, transparent 1px);
+  background-size: 80px 80px;
+  -webkit-mask-image: radial-gradient(900px 600px at 75% 30%, #000 0%, transparent 75%);
+          mask-image: radial-gradient(900px 600px at 75% 30%, #000 0%, transparent 75%);
+}
+.m-script { font-family: var(--font-script); }
+
+@keyframes m-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.m-rise { animation: m-rise 0.8s cubic-bezier(0.16,1,0.3,1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .m-rise { animation: none; }
+}
+
+/* ===========================================================================
+ * "THE LEDGER" — homepage redesign v2 (2026-06-24). Scoped to .theme-ledger.
+ * Dark accountant's-ledger world: near-black ink, luminous emerald accent,
+ * warm bone text, monospaced figures, motion-forward.
+ * ======================================================================== */
+.theme-ledger {
+  --l-bg:        #0A0C0B;
+  --l-bg-2:      #0E1311;
+  --l-ink:       #070908;
+  --l-bone:      #ECE7DA;
+  --l-bone-dim:  rgba(236,231,218,0.64);
+  --l-bone-faint:rgba(236,231,218,0.40);
+  --l-emerald:   #36D399;
+  --l-emerald-2: #1FA876;
+  --l-emerald-deep: #0C231A;
+  --l-gold:      #C9A24A;
+  --l-line:      rgba(236,231,218,0.10);
+  --l-line-2:    rgba(236,231,218,0.06);
+
+  background: var(--l-bg);
+  color: var(--l-bone);
+  font-family: var(--font-sans);
+}
+.theme-ledger ::selection { background: var(--l-emerald); color: var(--l-ink); }
+
+.l-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.l-serif { font-family: var(--font-display); }
+
+/* Ledger ruling grid (emerald-tinted hairlines) */
+.l-grid-bg {
+  background-image:
+    linear-gradient(var(--l-line-2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--l-line-2) 1px, transparent 1px);
+  background-size: 100% 2.4rem, 5rem 100%;
+}
+/* radial emerald glow + ink vignette */
+.l-glow-bg {
+  background:
+    radial-gradient(1100px 620px at 82% 14%, rgba(54,211,153,0.16), transparent 60%),
+    radial-gradient(800px 500px at 8% 95%, rgba(54,211,153,0.07), transparent 55%),
+    linear-gradient(180deg, var(--l-bg-2) 0%, var(--l-bg) 60%, var(--l-ink) 100%);
+}
+.l-grain::after {
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:0.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Perpetual adding-machine tape */
+@keyframes l-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.l-tape { display:flex; width:max-content; animation: l-marquee 38s linear infinite; }
+.l-tape-rev { animation-direction: reverse; }
+
+/* Falling figure columns (data rain) */
+@keyframes l-fall { from { transform: translateY(-50%); } to { transform: translateY(0%); } }
+.l-fall { animation: l-fall linear infinite; }
+
+/* Drawn ledger rule */
+@keyframes l-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Soft emerald pulse */
+@keyframes l-pulse { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
+.l-pulse { animation: l-pulse 3.2s ease-in-out infinite; }
+
+/* Blinking caret for the live-tally readout */
+@keyframes l-blink { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
+.l-caret { animation: l-blink 1.05s step-end infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .l-tape, .l-fall, .l-pulse, .l-caret { animation: none !important; }
+}
+
+/* ===========================================================================
+ * LEDGER → "MERIDIAN" RECOLOR (2026-06-24). Keeps the Ledger layout/motion but
+ * swaps the dark-green palette for white + navy/blue. Light is the base; the
+ * cinematic sections (hero, testimonials, footer) opt into .l-dark (navy).
+ * Appended last so it overrides the original .theme-ledger tokens.
+ * ======================================================================== */
+.theme-ledger {
+  --l-bg:        #F4F1EA;   /* PEARL base surface (was stark white) */
+  --l-bg-2:      #EAE4D7;   /* deeper pearl alt section */
+  --l-ink:       #FFFFFF;   /* text that sits ON the blue accent (buttons) */
+  --l-bone:      #16243F;   /* headings / primary text on light */
+  --l-bone-dim:  #3A4860;   /* body */
+  --l-bone-faint:#5A6373;   /* metadata (AA on pearl) */
+  --l-emerald:   #1E3A8A;   /* accent — deep navy/royal blue */
+  --l-emerald-2: #16306E;
+  --l-emerald-deep: #E4EAF6;/* faint blue wash (active rows) */
+  --l-gold:      #2563EB;
+  --l-line:      #D8D1C2;
+  --l-line-2:    #E6DFCF;
+
+  --l-btn:       #1E3A8A;   /* button background */
+  --l-btn-fg:    #FFFFFF;   /* button text */
+  --l-navy:      #0A1626;   /* canonical navy for dark sections */
+
+  background: var(--l-bg);
+  color: var(--l-bone);
+}
+.theme-ledger ::selection { background: var(--l-emerald); color: #fff; }
+
+/* Dark (navy) sections — override tokens so existing var() usage flips. */
+.theme-ledger .l-dark,
+.theme-ledger.l-dark {
+  --l-bg:        #0A1626;
+  --l-bg-2:      #0E2138;
+  --l-bone:      #F5F8FD;
+  --l-bone-dim:  rgba(245,248,253,0.74);
+  --l-bone-faint:rgba(245,248,253,0.52);
+  --l-emerald:   #6FA0F2;   /* lighter blue reads on navy */
+  --l-emerald-deep: rgba(46,107,230,0.16);
+  --l-line:      rgba(255,255,255,0.12);
+  --l-line-2:    rgba(255,255,255,0.06);
+  background: var(--l-bg);
+  color: var(--l-bone);
+}
+
+/* Cinematic navy hero backdrop (replaces the green glow). */
+.l-glow-bg {
+  background:
+    radial-gradient(1100px 620px at 82% 14%, rgba(46,107,230,0.30), transparent 60%),
+    radial-gradient(820px 520px at 8% 96%, rgba(46,107,230,0.12), transparent 55%),
+    linear-gradient(180deg, #0E2138 0%, #0A1626 60%, #060F1C 100%);
 }

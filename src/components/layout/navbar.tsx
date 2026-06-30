@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Menu, ChevronDown, DoorOpen, ArrowUpRight } from "lucide-react";
+import { BrandMark } from "./brand-mark";
 import {
   Sheet,
   SheetContent,
@@ -41,19 +42,8 @@ export function Navbar() {
     <header className="sticky top-0 z-[60] border-b border-[var(--color-rule)] bg-[var(--color-paper)]">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 h-20 flex items-center justify-between gap-6">
         {/* Masthead */}
-        <Link
-          href="/"
-          className="flex flex-col leading-[1.05] shrink-0 group/mark"
-        >
-          <span className="font-display text-[22px] text-[var(--color-ink)] tracking-[-0.02em]">
-            R&nbsp;<span className="italic">&amp;</span>&nbsp;M
-          </span>
-          <span className="hidden sm:block font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--color-ink-muted)] mt-0.5">
-            Accounting &amp; Tax Service
-          </span>
-          <span className="hidden sm:block font-mono text-[9px] uppercase tracking-[0.10em] text-[var(--color-gold-leaf)] mt-0.5">
-            Est. 1981 · Houston
-          </span>
+        <Link href="/" className="shrink-0 group/mark" aria-label="R & M — Clear Crossway Solutions, home">
+          <BrandMark />
         </Link>
 
         {/* Desktop nav */}
@@ -154,12 +144,8 @@ export function Navbar() {
               className="w-[88%] sm:w-[400px] overflow-y-auto bg-[var(--color-paper)] border-l border-[var(--color-rule)]"
             >
               <SheetHeader>
-                <SheetTitle className="font-display text-[22px] text-[var(--color-ink)] tracking-tight">
-                  R&nbsp;<span className="italic">&amp;</span>&nbsp;M
-                </SheetTitle>
-                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-gold-leaf)]">
-                  Est. 1981 · Houston
-                </span>
+                <SheetTitle className="sr-only">R & M — Clear Crossway Solutions</SheetTitle>
+                <BrandMark />
               </SheetHeader>
 
               <nav className="px-4 pb-6 flex flex-col">

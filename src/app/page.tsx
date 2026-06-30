@@ -1,30 +1,25 @@
-import { Hero } from "@/components/home/hero";
-import { ServicesGrid } from "@/components/home/services-grid";
-import { MeetOwner } from "@/components/home/meet-owner";
-import { HowItWorks } from "@/components/home/how-it-works";
-import { Testimonials } from "@/components/home/testimonials";
-import { FinalCta } from "@/components/home/final-cta";
-import { AnimateOnScroll } from "@/components/animate-on-scroll";
+import { HeroLedger } from "@/components/home/ledger/hero-ledger";
+import {
+  StatsLedger,
+  ServicesLedger,
+  MethodLedger,
+  ProofLedger,
+  CtaLedger,
+} from "@/components/home/ledger/sections-ledger";
 
+// "The Ledger" homepage redesign v2 (2026-06-24). The .theme-ledger scope +
+// bespoke nav/footer are applied by SiteChrome for the "/" route only, so the
+// rest of the site is untouched until approval. Prior versions (Meridian /
+// editorial) remain on disk for rollback.
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <AnimateOnScroll>
-        <ServicesGrid />
-      </AnimateOnScroll>
-      <AnimateOnScroll>
-        <MeetOwner />
-      </AnimateOnScroll>
-      <AnimateOnScroll>
-        <HowItWorks />
-      </AnimateOnScroll>
-      <AnimateOnScroll>
-        <Testimonials />
-      </AnimateOnScroll>
-      <AnimateOnScroll>
-        <FinalCta />
-      </AnimateOnScroll>
+      <HeroLedger />
+      <StatsLedger />
+      <ServicesLedger />
+      <MethodLedger />
+      <ProofLedger />
+      <CtaLedger />
     </>
   );
 }

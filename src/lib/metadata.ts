@@ -147,6 +147,44 @@ export function reviewsLd() {
   };
 }
 
+export function faqLd(faqs: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}
+
+export function localBusinessLd({
+  serviceName,
+  cityName,
+  url,
+}: {
+  serviceName: string;
+  cityName: string;
+  url: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${url}#localbusiness`,
+    name: `${SITE_NAME} — ${serviceName} in ${cityName}`,
+    description: `${serviceName} for ${cityName}, TX families and businesses.`,
+    url,
+    telephone: COMPANY.phoneTel,
+    email: COMPANY.email,
+    address: POSTAL_ADDRESS,
+    geo: GEO,
+    areaServed: { "@type": "City", name: cityName },
+    priceRange: "$$",
+    openingHours: "Mo-Fr 09:00-17:00",
+  };
+}
+
 export function breadcrumbLd(items: { name: string; url: string }[]) {
   return {
     "@context": "https://schema.org",

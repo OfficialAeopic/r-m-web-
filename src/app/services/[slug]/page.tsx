@@ -3,11 +3,18 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { services, getService } from "@/content/services";
+import { serviceAreas } from "@/content/service-areas";
 import { COMPANY } from "@/lib/constants";
 import { JsonLd } from "@/components/seo/json-ld";
-import { serviceLd, breadcrumbLd, buildMetadata } from "@/lib/metadata";
+import { serviceLd, breadcrumbLd, faqLd, buildMetadata } from "@/lib/metadata";
 import { SectionNumber } from "@/components/typography/section-number";
 import { pad2 } from "@/lib/roman";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -22,8 +29,10 @@ export async function generateMetadata({
   const service = getService(slug);
   if (!service) return { title: "Service not found" };
   return buildMetadata({
-    title: service.title,
-    description: (service.tagline + " " + service.description[0]).slice(0, 158),
+    title: service.metaTitle ?? service.title,
+    description:
+      service.metaDescription ??
+      (service.tagline + " " + service.description[0]).slice(0, 158),
     path: `/services/${service.slug}`,
   });
 }
@@ -45,22 +54,28 @@ export default async function ServicePage({
 
   const serviceUrl = `${COMPANY.url}/services/${service.slug}`;
 
+  // Top GEO-matrix cities for this service (P2 localBlurb → P4 matrix pages).
+  const matrixCities = serviceAreas.slice(0, 4);
+
+  const jsonLd: object[] = [
+    serviceLd({
+      name: service.title,
+      description: service.tagline,
+      url: serviceUrl,
+    }),
+    breadcrumbLd([
+      { name: "Home", url: "/" },
+      { name: "Services", url: "/services" },
+      { name: service.title, url: `/services/${service.slug}` },
+    ]),
+  ];
+  if (service.faqs && service.faqs.length > 0) {
+    jsonLd.push(faqLd(service.faqs));
+  }
+
   return (
     <>
-      <JsonLd
-        data={[
-          serviceLd({
-            name: service.title,
-            description: service.tagline,
-            url: serviceUrl,
-          }),
-          breadcrumbLd([
-            { name: "Home", url: "/" },
-            { name: "Services", url: "/services" },
-            { name: service.title, url: `/services/${service.slug}` },
-          ]),
-        ]}
-      />
+      <JsonLd data={jsonLd} />
 
       {/* Breadcrumb */}
       <nav
@@ -240,6 +255,59 @@ export default async function ServicePage({
               </li>
             ))}
           </ul>
+        </section>
+      )}
+
+      {/* Local blurb + GEO-matrix links */}
+      {service.localBlurb && (
+        <section className="mx-auto max-w-6xl px-5 lg:px-8 py-16 border-t border-[var(--color-rule)]">
+          <SectionNumber n={4} label="In Your Area" />
+          <p className="mt-7 font-display italic text-[18px] sm:text-[20px] leading-[1.5] text-[var(--color-ink-secondary)] max-w-3xl">
+            {service.localBlurb}
+          </p>
+          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+            {matrixCities.map((c) => (
+              <li key={c.slug}>
+                <Link
+                  href={`/${service.slug}-${c.slug}`}
+                  className="font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--color-ink)] underline decoration-[var(--color-gold-leaf)] underline-offset-[5px] hover:text-[var(--color-oxblood)]"
+                >
+                  {service.title} in {c.name} →
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* FAQ accordion */}
+      {service.faqs && service.faqs.length > 0 && (
+        <section className="mx-auto max-w-6xl px-5 lg:px-8 py-16 border-t border-[var(--color-rule)]">
+          <SectionNumber n={5} label="Questions" />
+          <h2
+            className="mt-5 font-display text-[var(--color-ink)]"
+            style={{ fontSize: "clamp(28px, 3.6vw, 44px)", lineHeight: 1.1 }}
+          >
+            Frequently asked.
+          </h2>
+          <div className="mt-8 max-w-3xl">
+            <Accordion type="single" collapsible className="w-full">
+              {service.faqs.map((f, i) => (
+                <AccordionItem
+                  key={i}
+                  value={`faq-${i}`}
+                  className="border-[var(--color-rule)]"
+                >
+                  <AccordionTrigger className="text-left font-display text-[17px] text-[var(--color-ink)]">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-[14px] leading-[1.6] text-[var(--color-ink-secondary)]">
+                    {f.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </section>
       )}
 

@@ -45,5 +45,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...serviceEntries, ...areaEntries, ...postEntries];
+  // GEO matrix: every service × city (P4). High-value service combos get a
+  // slightly higher priority to guide crawl.
+  const HIGH_VALUE = new Set([
+    "tax-preparation",
+    "bookkeeping",
+    "payroll",
+    "accounting",
+    "irs-resolution",
+  ]);
+  const matrixEntries: MetadataRoute.Sitemap = services.flatMap((s) =>
+    serviceAreas.map((a) => ({
+      url: `${SITE_URL}/${s.slug}-${a.slug}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: HIGH_VALUE.has(s.slug) ? 0.7 : 0.5,
+    })),
+  );
+
+  return [
+    ...staticEntries,
+    ...serviceEntries,
+    ...areaEntries,
+    ...matrixEntries,
+    ...postEntries,
+  ];
 }

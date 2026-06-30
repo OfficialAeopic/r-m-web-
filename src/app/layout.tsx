@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Fraunces, Public_Sans, IBM_Plex_Mono } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+import { Fraunces, Public_Sans, IBM_Plex_Mono, Caveat } from "next/font/google";
+import { ConsentedAnalytics } from "@/components/consented-analytics";
+import { SiteChrome } from "@/components/layout/site-chrome";
 import { JsonLd } from "@/components/seo/json-ld";
 import { organizationLd } from "@/lib/metadata";
 import { COMPANY } from "@/lib/constants";
@@ -25,6 +24,14 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
+  display: "swap",
+});
+
+// Handwritten accent for the redesigned homepage hero ("Fast,").
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -59,7 +66,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${publicSans.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${publicSans.variable} ${plexMono.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-paper text-ink flex flex-col font-sans">
         <JsonLd data={organizationLd()} />
@@ -69,15 +76,8 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Navbar />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        {process.env.NEXT_PUBLIC_GA_ID &&
-          process.env.NEXT_PUBLIC_GA_ID !== "G-PLACEHOLDER" && (
-            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-          )}
+        <SiteChrome>{children}</SiteChrome>
+        <ConsentedAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
       </body>
     </html>
   );
